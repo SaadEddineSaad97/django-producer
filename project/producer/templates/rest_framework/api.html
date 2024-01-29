@@ -1,0 +1,26 @@
+{% extends "rest_framework/base.html" %}
+
+{% block content %}
+  <div class="container">
+    <h1>API Overview</h1>
+    <p>Welcome to the API! Use the navigation on the left to explore available endpoints.</p>
+
+    <h2>Recent Messages:</h2>
+    <ul>
+      {% for message in messages %}
+        <li>{{ message.text }} - {{ message.timestamp }}</li>
+      {% endfor %}
+    </ul>
+
+    <h2>Create a New Message:</h2>
+    <form method="post" action="{% url 'message-list' %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Submit</button>
+    </form>
+
+    {% if schema_url %}
+      <p>View the <a href="{{ schema_url }}">API schema</a>.</p>
+    {% endif %}
+  </div>
+{% endblock %}
